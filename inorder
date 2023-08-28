@@ -1,0 +1,50 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+
+void inorderTraversal(TreeNode* root) {
+    if (root == NULL){
+        return;
+    }
+
+    stack<TreeNode*> nodeStack;
+    TreeNode* currentNode = root;
+
+    while (currentNode != NULL || !nodeStack.empty()) {
+        while (currentNode != NULL) {
+            nodeStack.push(currentNode);
+            currentNode = currentNode->left;
+        }
+
+        currentNode = nodeStack.top();
+        nodeStack.pop();
+
+        cout << currentNode->val << " ";
+
+        currentNode = currentNode->right;
+    }
+}
+
+int main() {
+    TreeNode* root = new TreeNode(4);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(6);
+    root->left->left = new TreeNode(1);
+    root->left->right = new TreeNode(3);
+    root->right->left = new TreeNode(5);
+    root->right->right = new TreeNode(7);
+
+    cout << "Inorder traversal: ";
+    inorderTraversal(root);
+
+    return 0;
+}
