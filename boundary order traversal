@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+struct TreeNode {
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+
+    TreeNode(int val) : data(val), left(nullptr), right(nullptr) {}
+};
+
+void leftBoundaryTraversal(TreeNode* root) {
+    if (root == nullptr) {
+        return;
+    }
+
+    if (root->left) {
+
+        cout << root->data << " ";
+        leftBoundaryTraversal(root->left);
+    } else if (root->right) {
+        cout << root->data << " ";
+        leftBoundaryTraversal(root->right);
+    }
+}
+
+void rightBoundaryTraversal(TreeNode* root) {
+    if (root == nullptr) {
+        return;
+    }
+
+    if (root->right) {
+        rightBoundaryTraversal(root->right);
+        
+        cout << root->data << " ";
+    } else if (root->left) {
+        rightBoundaryTraversal(root->left);
+        cout << root->data << " ";
+    }
+}
+
+
+void leafTraversal(TreeNode* root) {
+    if (root == nullptr) {
+        return;
+    }
+
+    if (!root->left && !root->right) {
+
+        cout << root->data << " ";
+    }
+
+    leafTraversal(root->left);
+    leafTraversal(root->right);
+}
+
+
+void boundaryOrderTraversal(TreeNode* root) {
+    if (root == nullptr) {
+        return;
+    }
+
+    cout << root->data << " ";
+
+
+    leftBoundaryTraversal(root->left);
+
+    leafTraversal(root);
+
+    rightBoundaryTraversal(root->right);
+}
+
+int main() {
+
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->left = new TreeNode(4);
+    root->left->right = new TreeNode(5);
+    root->right->left = new TreeNode(6);
+    root->right->right = new TreeNode(7);
+
+    cout << "Boundary Order Traversal: ";
+    boundaryOrderTraversal(root);
+
+    return 0;
+}
